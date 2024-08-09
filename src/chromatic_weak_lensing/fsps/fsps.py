@@ -69,7 +69,10 @@ def _get_spectrum(
 class FSPS(Stars):
     def __init__(self):
         self.name = "FSPS"
-        self.stellar_population = fsps.StellarPopulation(zcontinuous=0, add_neb_emission=True)
+        self.stellar_population = fsps.StellarPopulation(
+            zcontinuous=0,
+            add_neb_emission=True,
+        )
 
     def get_spectrum(
         self,
@@ -80,8 +83,19 @@ class FSPS(Stars):
         mu0,
         phase=1,
         comp=0.5,
-        zmet=None,
+        metallicity=0.01
     ):
+        # get index of closest metallicity from legend
+        # note that fortran indexes from 1 onwards, not 0
+        zmet = np.argmin(
+            np.abs(
+                np.subtract(
+                    metallicity,
+                    self.stellar_population.zlegend,
+                ),
+            ),
+        ) + 1
+        logger.info(f"using zmet={zmet} [z={self.stellar_population.zlegend[zmet - 1]}]")
         return _get_spectrum(
             self.stellar_population,
             mact,
