@@ -208,7 +208,7 @@ def _get_galaxy(
     rest_sed_knot,
     cosmo_params,
     n_knots=0,
-    morphology="achromatic",
+    morphology="chromatic",
     m_total=None,
     m_bulge=None,
     m_disk=None,
