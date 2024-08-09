@@ -34,6 +34,7 @@ def _get_spectrum(
     mu0,
     phase=1,
     comp=0.5,
+    zmet=None,
 ):
     _start_time = time.time()
 
@@ -48,6 +49,7 @@ def _get_spectrum(
         logg,
         phase,
         comp,
+        zmet=zmet,
         peraa=False,
     )
     surface_area =  utils.get_surface_area(mu0)
@@ -67,7 +69,7 @@ def _get_spectrum(
 class FSPS(Stars):
     def __init__(self):
         self.name = "FSPS"
-        self.sp = fsps.StellarPopulation(zcontinuous=1)
+        self.stellar_population = fsps.StellarPopulation(zcontinuous=0, add_neb_emission=True)
 
     def get_spectrum(
         self,
@@ -78,9 +80,10 @@ class FSPS(Stars):
         mu0,
         phase=1,
         comp=0.5,
+        zmet=None,
     ):
         return _get_spectrum(
-            self.sp,
+            self.stellar_population,
             mact,
             logt,
             lbol,
@@ -88,4 +91,5 @@ class FSPS(Stars):
             mu0,
             phase=phase,
             comp=comp,
+            zmet=zmet,
         )
