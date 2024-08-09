@@ -25,6 +25,9 @@ fsps = [
 phoenix = [
     "pystellibs @ git+https://github.com/cahebert/pystellibs.git#egg=add-phoenix-data",
 ]
+btsettl = [
+    "pystellibs",
+]
 diffsky = [
     "diffmah==0.4.2",
     "diffstar==0.2.2",
