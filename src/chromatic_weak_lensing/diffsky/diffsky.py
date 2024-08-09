@@ -307,7 +307,7 @@ def _get_diffsky_params(data, i):
     return diffsky_param_data
 
 
-class RomanRubinSource:
+class RomanRubin:
     def __init__(self, data):
         self.data = data
 
@@ -374,9 +374,9 @@ class RomanRubinSource:
         )
 
 
-class RomanRubin(Galaxies):
+class Diffsky(Galaxies):
     def __init__(self, throughputs=None):
-        self.name = "RomanRubin2023"
+        self.name = "diffsky"
         self.diffskypop_params = load_diffskypop_params()
 
         _ssp_data = load_dsps_ssp_data()
