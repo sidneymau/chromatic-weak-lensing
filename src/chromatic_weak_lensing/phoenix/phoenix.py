@@ -29,11 +29,11 @@ FLUX_FACTOR = (1 * _flux_type).to(galsim.SED._flambda).value
 
 def _get_spectrum(
     speclib,
-    logte,
-    logg,
-    logl,
-    metallicity,
-    mu0,
+    logt=None,
+    logl=None,
+    logg=None,
+    distance_modulus=None,
+    z=None,
 ):
     _start_time = time.time()
 
@@ -42,12 +42,12 @@ def _get_spectrum(
 
     wl = speclib._wavelength
     spec = speclib.generate_stellar_spectrum(
-        logte,
+        logt,
         logg,
         logl,
-        metallicity,
+        z,
     )
-    surface_area =  utils.get_surface_area(mu0)
+    surface_area =  utils.get_surface_area(distance_modulus)
     sed_table = galsim.LookupTable(
         wl,
         spec * FLUX_FACTOR / surface_area,
@@ -69,17 +69,17 @@ class Phoenix(Stars):
 
     def get_spectrum(
         self,
-        logte,
-        logg,
-        logl,
-        metallicity,
-        mu0,
+        logt=None,
+        logl=None,
+        logg=None,
+        distance_modulus=None,
+        z=None,
     ):
         return _get_spectrum(
             self.speclib,
-            logte,
-            logg,
-            logl,
-            metallicity,
-            mu0,
+            logt=logt,
+            logl=logl,
+            logg=logg,
+            distance_modulus=distance_modulus,
+            z=z,
         )

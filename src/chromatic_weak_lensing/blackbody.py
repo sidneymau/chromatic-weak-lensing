@@ -23,19 +23,33 @@ FLUX_FACTOR = (1 * _flux_type).to(galsim.SED._flambda).value
 SOLRAD = R_sun.to(u.pc).value
 
 
-def _blackbody_luminosity(t, mu0, radius, wl):
-    distance =  utils.get_distance(mu0)
+def _blackbody_luminosity(
+    wl,
+    temperature=None,
+    distance_modulus=None,
+    radius=None,
+):
+    distance =  utils.get_distance(distance_modulus)
     return (
         2 * math.pi * h * c**2
         / (wl * u.nm)**5
-        / (np.exp(h * c / (wl * u.nm * k_B * t * u.K)) - 1)
+        / (np.exp(h * c / (wl * u.nm * k_B * temperature * u.K)) - 1)
         * (radius * SOLRAD / distance)**2
     ).to(galsim.SED._flambda).value
 
 
-def _blackbody_sed(temp, mu0, radius):
+def _blackbody_sed(
+    temperature=None,
+    distance_modulus=None,
+    radius=None,
+):
     return galsim.SED(
-        functools.partial(_blackbody_luminosity, temp, mu0, radius),
+        functools.partial(
+            _blackbody_luminosity,
+            temperature=temperature,
+            distance_modulus=distance_modulus,
+            radius=radius,
+        ),
         wave_type="nm",
         flux_type="flambda"
     )
@@ -45,5 +59,14 @@ class Blackbody(Stars):
     def __init__(self):
         self.name = "Blackbody"
 
-    def get_spectrum(self, temp, mu0, radius):
-        return _blackbody_sed(temp, mu0, radius)
+    def get_spectrum(
+        self,
+        temperature=None,
+        distance_modulus=None,
+        radius=None,
+    ):
+        return _blackbody_sed(
+            temperature=temperature,
+            distance_modulus=distance_modulus,
+            radius=radius,
+        )

@@ -27,13 +27,13 @@ FLUX_FACTOR = (1 * _flux_type).to(galsim.SED._fnu).value
 
 def _get_spectrum(
     stellar_population,
-    mact,
-    logt,
-    lbol,
-    logg,
-    mu0,
+    mass=None,
+    logt=None,
+    logl=None,
+    logg=None,
+    distance_modulus=None,
     phase=1,
-    comp=0.5,
+    comp=None,
     zmet=None,
 ):
     _start_time = time.time()
@@ -41,9 +41,11 @@ def _get_spectrum(
     wave_type = "angstrom"
     flux_type = "fnu"
 
+    lbol = 10 ** logl
+
     wl = stellar_population.wavelengths
     spec = stellar_population._get_stellar_spectrum(
-        mact,
+        mass,
         logt,
         lbol,
         logg,
@@ -52,7 +54,7 @@ def _get_spectrum(
         zmet=zmet,
         peraa=False,
     )
-    surface_area =  utils.get_surface_area(mu0)
+    surface_area =  utils.get_surface_area(distance_modulus)
     sed_table = galsim.LookupTable(
         wl,
         spec * FLUX_FACTOR / surface_area,
@@ -76,21 +78,21 @@ class FSPS(Stars):
 
     def get_spectrum(
         self,
-        mact,
-        logt,
-        lbol,
-        logg,
-        mu0,
+        mass=None,
+        logt=None,
+        logl=None,
+        logg=None,
+        distance_modulus=None,
         phase=1,
         comp=0.5,
-        metallicity=0.01
+        z=0.01
     ):
         # get index of closest metallicity from legend
         # note that fortran indexes from 1 onwards, not 0
         zmet = np.argmin(
             np.abs(
                 np.subtract(
-                    metallicity,
+                    z,
                     self.stellar_population.zlegend,
                 ),
             ),
@@ -98,11 +100,11 @@ class FSPS(Stars):
         logger.info(f"using zmet={zmet} [z={self.stellar_population.zlegend[zmet - 1]}]")
         return _get_spectrum(
             self.stellar_population,
-            mact,
-            logt,
-            lbol,
-            logg,
-            mu0,
+            mass=mass,
+            logt=logt,
+            logl=logl,
+            logg=logg,
+            distance_modulus=distance_modulus,
             phase=phase,
             comp=comp,
             zmet=zmet,
