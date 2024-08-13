@@ -18,6 +18,10 @@ def unwrap(value):
        return value
 
 
+def get_distance_modulus(distance):
+    return 5 * math.log(distance, 10) - 5
+
+
 def get_distance(distance_modulus):
     return 10**(1 + distance_modulus / 5)
 
@@ -31,8 +35,8 @@ def get_surface_area(distance_modulus):
     return 4 * math.pi * distance**2
 
 
-def get_extinction(av, red_limit=12_000):
-    ext = G23(Rv=3.1)
+def get_extinction(av, Rv=3.1, red_limit=12_000):
+    ext = G23(Rv=Rv)
 
     eps = 1e-7  # machine epsilon
     wl_min = 1e4 / ext.x_range[1]  + eps # 1/micron to angstrom
