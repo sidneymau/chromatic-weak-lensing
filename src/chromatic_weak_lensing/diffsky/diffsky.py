@@ -375,17 +375,15 @@ class RomanRubin:
 
 
 class Diffsky(Galaxies):
-    def __init__(self, throughputs=None):
+    def __init__(self, red_limit=12_000):
         self.name = "diffsky"
         self.diffskypop_params = load_diffskypop_params()
 
         _ssp_data = load_dsps_ssp_data()
-        if throughputs is not None:
+        if red_limit is not None:
             from lsstdesc_diffsky.legacy.roman_rubin_2023.dsps.data_loaders.defaults import SSPDataSingleMet
-            # remove porition of SED redder than redmost limit of all bandpasses;
             # note that we can't impose a lower limit due to redshifting
-            _max = np.max([throughput.red_limit for throughput in throughputs.values()]) * 10
-            _keep = (_ssp_data.ssp_wave < _max)
+            _keep = (_ssp_data.ssp_wave < red_limit)
             logger.debug(f"discarding {(~_keep).sum()} of {len(_keep)} wavelengths from templates")
             _ssp_wave = _ssp_data.ssp_wave[_keep]
             _ssp_flux = _ssp_data.ssp_flux[:, _keep]
