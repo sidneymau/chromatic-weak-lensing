@@ -10,6 +10,7 @@ authors = [
 dynamic = ["version"]
 dependencies = [
     "astropy",
+    "dust_extinction",
     "h5py",
     "galsim",
     "matplotlib",

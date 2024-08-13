@@ -3,11 +3,11 @@ import logging
 import time
 
 import astropy.units as u
-from astropy.constants import h, c, k_B, sigma_sb
+from astropy.constants import h, c, k_B, sigma_sb, R_sun
+from astropy.modeling.models import BlackBody
 import math
 import galsim
 import numpy as np
-
 
 from chromatic_weak_lensing import utils
 from chromatic_weak_lensing import Stars
@@ -16,33 +16,26 @@ from chromatic_weak_lensing import Stars
 logger = logging.getLogger(__name__)
 
 
-def _blackbody_radiance(t, mu0, wl):
-    """
-    See https://en.wikipedia.org/wiki/Planck%27s_law#Different_forms
-    Returns blackbody radiance in flambda [u.erg / u.nm / u.cm**2 / u.s]
-    """
-    surface_area =  utils.get_surface_area(mu0)
+_wave_type = u.angstrom
+_flux_type = u.erg / u.AA / u.second / u.cm**2
+FLUX_FACTOR = (1 * _flux_type).to(galsim.SED._flambda).value
+
+SOLRAD = R_sun.to(u.pc).value
+
+
+def _blackbody_luminosity(t, mu0, radius, wl):
+    distance =  utils.get_distance(mu0)
     return (
-        2 * h * c**2
+        2 * math.pi * h * c**2
         / (wl * u.nm)**5
         / (np.exp(h * c / (wl * u.nm * k_B * t * u.K)) - 1)
-    ).to(galsim.SED._flambda).value / surface_area
-
-    # # Flambda ?
-    # mu0 = 18
-    # r = 10**(1 + mu0 / 5)
-    # R = u.Rsun.to(u.pc)
-    # return (
-    #     2 * math.pi * h * c**2
-    #     / (wl * u.nm)**5
-    #     / (np.exp(h * c / (wl * u.nm * k_B * t * u.K)) - 1)
-    #     * (R / r)**2
-    # ).to(galsim.SED._flambda).value
+        * (radius * SOLRAD / distance)**2
+    ).to(galsim.SED._flambda).value
 
 
-def _blackbody_sed(temp, mu0):
+def _blackbody_sed(temp, mu0, radius):
     return galsim.SED(
-        functools.partial(_blackbody_radiance, temp, mu0),
+        functools.partial(_blackbody_luminosity, temp, mu0, radius),
         wave_type="nm",
         flux_type="flambda"
     )
@@ -52,5 +45,5 @@ class Blackbody(Stars):
     def __init__(self):
         self.name = "Blackbody"
 
-    def get_spectrum(self, temp, mu0):
-        return _blackbody_sed(temp, mu0)
+    def get_spectrum(self, temp, mu0, radius):
+        return _blackbody_sed(temp, mu0, radius)
