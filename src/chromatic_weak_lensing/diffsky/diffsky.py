@@ -371,6 +371,7 @@ class RomanRubin:
             diskEllipticity2,
             diskHalfLightRadiusArcsec,
             diffsky_param_data,
+            n_knots,
         )
 
 
