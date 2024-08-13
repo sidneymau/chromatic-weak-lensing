@@ -6,6 +6,8 @@ import astropy.units as u
 from astropy.constants import G
 import galsim
 
+from chromatic_weak_lensing import utils
+
 
 logger = logging.getLogger(__name__)
 
@@ -42,34 +44,35 @@ class StellarParams:
         self._composition = composition
 
         if (self.logg is not None) and (self.g is not None):
-            assert self.logg == math.log(self.g, 10)
+            assert math.isclose(self.logg, math.log(self.g, 10))
         elif (self.logg is not None) and (self.g is None):
             self._g = 10 ** self._logg
         elif (self.logg is None) and (self.g is not None):
             self._logg = math.log(self._g, 10)
 
         if (self.logT is not None) and (self.T is not None):
-            assert self.logT == math.log(self.T, 10)
+            assert math.isclose(self.logT, math.log(self.T, 10))
         elif (self.logT is not None) and (self.T is None):
             self._T = 10 ** self._logT
         elif (self.logT is None) and (self.T is not None):
             self._logT = math.log(self._T, 10)
 
         if (self.logl is not None) and (self.l is not None):
-            assert self.logl == math.log(self.l, 10)
+            assert math.isclose(self.logl, math.log(self.l, 10))
         elif (self.logl is not None) and (self.l is None):
             self._l = 10 ** self._logl
         elif (self.logl is None) and (self.l is not None):
             self._logl = math.log(self._l, 10)
 
         if (self.distance_modulus is not None) and (self.distance is not None):
-            assert self.distance_modulus == 5 * math.log(self.distance, 10) - 5
+            assert math.isclose(
+                self.distance_modulus,
+                utils.get_distance_modulus(self.distance),
+            )
         elif (self.distance_modulus is None) and (self.distance is not None):
-            # mu = 5 log(d) - 5
-            self._distance_modulus = 5 * math.log(self.distance, 10) - 5
+            self._distance_modulus = utils.get_distance_modulus(self.distance)
         elif (self.distance is None) and (self.distance_modulus is not None):
-            # d = 10**(1 + mu / 5)
-            self._distance = 10 ** (1 + self.distance_modulus / 5)
+            self._distance = utils.get_distance(self.distance_modulus)
 
         if (self.mass is not None) and (self.radius is not None) and (self.logg is None):
             # g = G M / R^2 [cm / s^2]
