@@ -29,11 +29,11 @@ FLUX_FACTOR = (1 * _flux_type).to(galsim.SED._flambda).value
 
 def _get_spectrum(
     speclib,
-    logt=None,
-    logl=None,
-    logg=None,
-    distance_modulus=None,
-    z=None,
+    logt,
+    logl,
+    logg,
+    distance_modulus,
+    z,
 ):
     _start_time = time.time()
 
@@ -67,19 +67,31 @@ class Phoenix(Stars):
         self.name = "Phoenix"
         self.speclib = pystellibs.Phoenix()
 
+    def get_params(
+        self,
+        stellar_params,
+    ):
+        return (
+            stellar_params.logT,
+            stellar_params.logl,
+            stellar_params.logg,
+            stellar_params.distance_modulus,
+            stellar_params.z,
+        )
+
     def get_spectrum(
         self,
-        logt=None,
-        logl=None,
-        logg=None,
-        distance_modulus=None,
-        z=None,
+        logt,
+        logl,
+        logg,
+        distance_modulus,
+        z,
     ):
         return _get_spectrum(
             self.speclib,
-            logt=logt,
-            logl=logl,
-            logg=logg,
-            distance_modulus=distance_modulus,
-            z=z,
+            logt,
+            logl,
+            logg,
+            distance_modulus,
+            z,
         )

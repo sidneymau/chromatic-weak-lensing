@@ -5,7 +5,7 @@ from .galaxies import (
 )
 
 from .stars import (
-    Stars,
+    StellarParams, Stars,
 )
 
 from .blackbody import (

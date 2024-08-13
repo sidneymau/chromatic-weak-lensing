@@ -27,14 +27,14 @@ FLUX_FACTOR = (1 * _flux_type).to(galsim.SED._fnu).value
 
 def _get_spectrum(
     stellar_population,
-    mass=None,
-    logt=None,
-    logl=None,
-    logg=None,
-    distance_modulus=None,
-    phase=1,
-    comp=None,
+    mass,
+    logt,
+    logl,
+    logg,
+    distance_modulus,
     zmet=None,
+    phase=1,
+    composition=1,
 ):
     _start_time = time.time()
 
@@ -50,7 +50,7 @@ def _get_spectrum(
         lbol,
         logg,
         phase,
-        comp,
+        composition,
         zmet=zmet,
         peraa=False,
     )
@@ -76,16 +76,41 @@ class FSPS(Stars):
             add_neb_emission=True,
         )
 
+    def get_params(
+        self,
+        stellar_params,
+    ):
+        if stellar_params.phase is not None:
+            return (
+                stellar_params.mass,
+                stellar_params.logT,
+                stellar_params.logl,
+                stellar_params.logg,
+                stellar_params.distance_modulus,
+                stellar_params.z,
+                stellar_params.phase,
+                stellar_params.composition,
+            )
+        else:
+            return (
+                stellar_params.mass,
+                stellar_params.logT,
+                stellar_params.logl,
+                stellar_params.logg,
+                stellar_params.distance_modulus,
+                stellar_params.z,
+            )
+
     def get_spectrum(
         self,
-        mass=None,
-        logt=None,
-        logl=None,
-        logg=None,
-        distance_modulus=None,
+        mass,
+        logt,
+        logl,
+        logg,
+        distance_modulus,
+        z,
         phase=1,
-        comp=0.5,
-        z=0.01
+        composition=1,
     ):
         # get index of closest metallicity from legend
         # note that fortran indexes from 1 onwards, not 0
@@ -100,12 +125,12 @@ class FSPS(Stars):
         logger.info(f"using zmet={zmet} [z={self.stellar_population.zlegend[zmet - 1]}]")
         return _get_spectrum(
             self.stellar_population,
-            mass=mass,
-            logt=logt,
-            logl=logl,
-            logg=logg,
-            distance_modulus=distance_modulus,
-            phase=phase,
-            comp=comp,
+            mass,
+            logt,
+            logl,
+            logg,
+            distance_modulus,
             zmet=zmet,
+            phase=phase,
+            composition=composition,
         )

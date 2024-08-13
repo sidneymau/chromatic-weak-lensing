@@ -29,7 +29,7 @@ def _blackbody_luminosity(
     distance_modulus=None,
     radius=None,
 ):
-    distance =  utils.get_distance(distance_modulus)
+    distance = utils.get_distance(distance_modulus)
     return (
         2 * math.pi * h * c**2
         / (wl * u.nm)**5
@@ -39,9 +39,9 @@ def _blackbody_luminosity(
 
 
 def _blackbody_sed(
-    temperature=None,
-    distance_modulus=None,
-    radius=None,
+    temperature,
+    distance_modulus,
+    radius,
 ):
     return galsim.SED(
         functools.partial(
@@ -59,14 +59,24 @@ class Blackbody(Stars):
     def __init__(self):
         self.name = "Blackbody"
 
+    def get_params(
+        self,
+        stellar_params,
+    ):
+        return (
+            stellar_params.T,
+            stellar_params.distance_modulus,
+            stellar_params.radius,
+        )
+
     def get_spectrum(
         self,
-        temperature=None,
-        distance_modulus=None,
-        radius=None,
+        temperature,
+        distance_modulus,
+        radius,
     ):
         return _blackbody_sed(
-            temperature=temperature,
-            distance_modulus=distance_modulus,
-            radius=radius,
+            temperature,
+            distance_modulus,
+            radius,
         )
