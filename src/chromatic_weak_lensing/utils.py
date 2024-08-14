@@ -30,7 +30,6 @@ def get_surface_area(distance_modulus):
     """
     Area of the sphere whose radius extends from the source to the observer
     """
-    # distance = 10**(1 + distance_modulus / 5)
     distance = get_distance(distance_modulus)
     return 4 * math.pi * distance**2
 
