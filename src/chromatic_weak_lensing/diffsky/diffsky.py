@@ -308,6 +308,20 @@ def _get_diffsky_params(data, i):
 
 
 class RomanRubin:
+    # these are the minimal necessary columns for producing diffsky galaxies
+    morphology_columns = [
+       "redshift",
+       "spheroidEllipticity1",
+       "spheroidEllipticity2",
+       "spheroidHalfLightRadiusArcsec",
+       "diskEllipticity1",
+       "diskEllipticity2",
+       "diskHalfLightRadiusArcsec",
+       "um_source_galaxy_obs_sm",
+    ]
+    spectral_columns = ALL_DIFFSKY_PNAMES
+    columns = list(set(morphology_columns + spectral_columns))
+
     def __init__(self, data):
         self.data = data
 
@@ -392,18 +406,6 @@ class Diffsky(Galaxies):
         else:
             ssp_data = _ssp_data
         self.ssp_data = ssp_data
-
-        _morph_columns = [
-           "redshift",
-           "spheroidEllipticity1",
-           "spheroidEllipticity2",
-           "spheroidHalfLightRadiusArcsec",
-           "diskEllipticity1",
-           "diskEllipticity2",
-           "diskHalfLightRadiusArcsec",
-           "um_source_galaxy_obs_sm",
-        ]
-        self.columns = list(set(_morph_columns + ALL_DIFFSKY_PNAMES))
 
         self.cosmo_params = OUTER_RIM_COSMO_PARAMS
 
