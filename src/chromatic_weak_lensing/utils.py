@@ -13,9 +13,9 @@ logger = logging.getLogger(__name__)
 
 def unwrap(value):
     if isinstance(value, pa.Scalar):
-       return value.as_py()
+        return value.as_py()
     else:
-       return value
+        return value
 
 
 def get_distance_modulus(distance):
