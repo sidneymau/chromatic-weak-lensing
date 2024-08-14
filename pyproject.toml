@@ -20,12 +20,6 @@ dependencies = [
 
 
 [project.optional-dependencies]
-fsps = [
-    "fsps",
-]
-phoenix = [
-    "pystellibs @ git+https://github.com/cahebert/pystellibs.git#egg=add-phoenix-data",
-]
 btsettl = [
     "pystellibs",
 ]
@@ -36,4 +30,10 @@ diffsky = [
     "jax==0.4.19",
     "lsstdesc-diffsky==1.0.0",
     "scipy==1.10.1",
+]
+fsps = [
+    "fsps",
+]
+phoenix = [
+    "pystellibs @ git+https://github.com/cahebert/pystellibs.git#egg=add-phoenix-data",
 ]
