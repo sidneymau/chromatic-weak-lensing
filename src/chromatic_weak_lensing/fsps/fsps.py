@@ -75,6 +75,7 @@ class FSPS(Stars):
             zcontinuous=0,
             add_neb_emission=True,
         )
+        self.spec_library = self.stellar_population.spec_library.decode("utf-8")
 
     def get_params(
         self,
