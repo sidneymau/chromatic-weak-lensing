@@ -100,12 +100,25 @@ class StellarParams:
             ).decompose()
 
         # Stefan-Boltzmann
-        if (self.L is not None) and (self.radius is not None) and (self.T is None):
+        if (self.logL is None) and (self.radius is not None) and (self.logT is not None):
+            # L = 4 pi sigma R^2 T^4 [L_sun]
+            _L = (
+                4 * math.pi * sigma_sb * (self._radius * u.R_sun)**2 * (self._T * u.K)**4
+            ).decompose().value
+            self._logL = math.log(_L, 10)
+            self._L = _L
+        elif (self.logL is not None) and (self.radius is not None) and (self.logT is None):
+            # T = (L / 4 pi sigma R^2)^(1/4) [K]
             _T = (
                 (self._L * u.L_sun / (4 * math.pi * sigma_sb * (self._radius * u.R_sun)**2))**(1/4)
             ).decompose().value
             self._logT = math.log(_T, 10)
             self._T = _T
+        elif (self.logL is not None) and (self.radius is None) and (self.logT is not None):
+            # R = (L / 4 pi sigma T^4)^(1/2) [R_sun]
+            self._radius = (
+                (self._L * u.L_sun / (4 * math.pi * sigma_sb * (self._T * u.K)**4))**(1/2)
+            ).decompose().value
 
     @property
     def ra(self):
