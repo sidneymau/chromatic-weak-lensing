@@ -1,7 +1,9 @@
+from collections import OrderedDict, UserDict
 import logging
 import math
 
 import astropy.units as u
+import h5py
 import galsim
 import numpy as np
 import pyarrow as pa
@@ -16,6 +18,20 @@ def unwrap(value):
         return value.as_py()
     else:
         return value
+
+
+def count_rows(data):
+    match data:
+        case dict() | OrderedDict() | UserDict():
+            return len(next(iter(data.values())))
+        case h5py.Group():
+            return len(next(iter(data.values())))
+        case np.ndarray():
+            return len(data)
+        case pa.Table() | pa.RecordBatch():
+            return data.num_rows
+        case _:
+            return None
 
 
 def get_distance_modulus(distance):

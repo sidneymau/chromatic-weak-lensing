@@ -15,6 +15,9 @@ logger = logging.getLogger(__name__)
 class StellarParams:
     def __init__(
         self,
+        ra=None,
+        dec=None,
+        Av=None,
         mass=None,
         radius=None,
         logT=None,
@@ -29,6 +32,9 @@ class StellarParams:
         phase=None,
         composition=None,
     ):
+        self._ra = ra
+        self._dec = dec
+        self._Av = Av
         self._mass = mass
         self._radius = radius
         self._logg = logg
@@ -93,6 +99,18 @@ class StellarParams:
             ).decompose()
 
     @property
+    def ra(self):
+        return self._ra
+
+    @property
+    def dec(self):
+        return self._dec
+
+    @property
+    def Av(self):
+        return self._Av
+
+    @property
     def mass(self):
         return self._mass
 
@@ -143,6 +161,23 @@ class StellarParams:
     @property
     def composition(self):
         return self._composition
+
+    def __repr__(self):
+        return (
+            f"Stellar Parameters\n"
+            f"    ra: {self.ra}\n"
+            f"    dec: {self.dec}\n"
+            f"    Av: {self.Av}\n"
+            f"    mass: {self.mass}\n"
+            f"    radius: {self.radius}\n"
+            f"    logg: {self.logg}\n"
+            f"    logT: {self.logT}\n"
+            f"    logl: {self.logl}\n"
+            f"    z: {self.z}\n"
+            f"    phase: {self.phase}\n"
+            f"    composition: {self.composition}\n"
+            f"    distance_modulus: {self.distance_modulus}\n"
+        )
 
 
 class Stars:

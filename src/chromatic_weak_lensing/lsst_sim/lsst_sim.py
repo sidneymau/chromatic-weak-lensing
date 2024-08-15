@@ -37,9 +37,13 @@ def _query_data_lab(ring, N):
 class LSST_Sim:
     def __init__(self, data):
         self.data = data
+        self.num_rows = utils.count_rows(data)
 
     def get_params(self, i):
         sparams = StellarParams(
+            ra=self.data["ra"][i],
+            dec=self.data["dec"][i],
+            Av=self.data["av"][i],
             mass=self.data["mass"][i],
             logg=self.data["logg"][i],
             logT=self.data["logte"][i],

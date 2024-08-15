@@ -324,6 +324,7 @@ class RomanRubin:
 
     def __init__(self, data):
         self.data = data
+        self.num_rows = utils.count_rows(self.data)
 
     def get_morphology_params(self, i, knots=False):
         redshift = utils.unwrap(self.data["redshift"][i])
