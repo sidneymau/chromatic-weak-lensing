@@ -11,3 +11,7 @@ from .stars import (
 from .blackbody import (
     Blackbody,
 )
+
+from .main_sequence import (
+    MainSequence,
+)
