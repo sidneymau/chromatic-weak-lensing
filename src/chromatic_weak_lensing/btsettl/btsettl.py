@@ -72,7 +72,7 @@ class BTSettl(Stars):
     ):
         return (
             stellar_params.logT,
-            stellar_params.logl,
+            stellar_params.logL,
             stellar_params.logg,
             stellar_params.distance_modulus,
             stellar_params.z,

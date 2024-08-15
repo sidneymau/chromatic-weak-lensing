@@ -47,7 +47,7 @@ class LSST_Sim:
             mass=self.data["mass"][i],
             logg=self.data["logg"][i],
             logT=self.data["logte"][i],
-            logl=self.data["logl"][i],
+            logL=self.data["logl"][i],
             distance_modulus=self.data["mu0"][i],
             z=self.data["z"][i],
             phase=self.data["label"][i],
