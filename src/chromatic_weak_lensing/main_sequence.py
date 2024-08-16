@@ -75,8 +75,8 @@ class MainSequence:
     composition = 1
 
     # solar metallicity
-    # _z = 0.0134  # https://arxiv.org/abs/0909.0948
-    z = 0.019  # https://arxiv.org/abs/0809.4261
+    # z = 0.019  # https://arxiv.org/abs/0809.4261
+    z = 0.0134  # https://arxiv.org/abs/0909.0948
 
     @classmethod
     def get_params(self, mass, distance=None, distance_modulus=None):
