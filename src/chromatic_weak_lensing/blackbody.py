@@ -3,8 +3,7 @@ import logging
 import time
 
 import astropy.units as u
-from astropy.constants import h, c, k_B, sigma_sb, R_sun
-from astropy.modeling.models import BlackBody
+from astropy.constants import h, c, k_B
 import math
 import galsim
 import numpy as np
@@ -20,8 +19,6 @@ _wave_type = u.angstrom
 _flux_type = u.erg / u.AA / u.second / u.cm**2
 FLUX_FACTOR = (1 * _flux_type).to(galsim.SED._flambda).value
 
-SOLRAD = R_sun.to(u.pc).value
-
 
 def _blackbody_luminosity(
     wl,
@@ -34,7 +31,7 @@ def _blackbody_luminosity(
         2 * math.pi * h * c**2
         / (wl * u.nm)**5
         / (np.exp(h * c / (wl * u.nm * k_B * temperature * u.K)) - 1)
-        * (radius * SOLRAD / distance)**2
+        * (radius * u.R_sun / (distance * u.pc))**2
     ).to(galsim.SED._flambda).value
 
 
