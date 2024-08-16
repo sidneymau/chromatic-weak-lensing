@@ -35,12 +35,13 @@ def _blackbody_luminosity(
     ).to(galsim.SED._flambda).value
 
 
-def _blackbody_sed(
+def _get_spectrum(
     temperature,
     distance_modulus,
     radius,
 ):
-    return galsim.SED(
+    _start_time = time.time()
+    sed = galsim.SED(
         functools.partial(
             _blackbody_luminosity,
             temperature=temperature,
@@ -50,6 +51,12 @@ def _blackbody_sed(
         wave_type="nm",
         flux_type="flambda"
     )
+
+    _end_time = time.time()
+    _elapsed_time = _end_time - _start_time
+    logger.info(f"made stellar spectrum in {_elapsed_time} seconds")
+
+    return sed
 
 
 class Blackbody(Stars):
@@ -72,7 +79,7 @@ class Blackbody(Stars):
         distance_modulus,
         radius,
     ):
-        return _blackbody_sed(
+        return _get_spectrum(
             temperature,
             distance_modulus,
             radius,

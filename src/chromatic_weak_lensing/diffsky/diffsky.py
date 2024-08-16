@@ -71,7 +71,7 @@ def _get_morphology(
 
     _end_time = time.time()
     _elapsed_time = _end_time - _start_time
-    logger.debug(f"built galaxy morphology in {_elapsed_time} seconds")
+    logger.info(f"made galaxy morphology in {_elapsed_time} seconds")
 
     return bulge, disk, knots
 
@@ -89,8 +89,6 @@ def _get_total_morphology(
     m_knot,
     n_knots=0,
 ):
-    _start_time = time.time()
-
     bulge, disk, knots = _get_morphology(
         spheroidEllipticity1,
         spheroidEllipticity2,
@@ -105,10 +103,6 @@ def _get_total_morphology(
         morphology =  (bulge * m_bulge + disk * m_disk + knots * m_knot) / m_total
     else:
         morphology = (bulge * m_bulge + disk * (m_disk + m_knot)) / m_total
-
-    _end_time = time.time()
-    _elapsed_time = _end_time - _start_time
-    logger.debug(f"made galaxy morphology in {_elapsed_time} seconds")
 
     return morphology
 
@@ -170,7 +164,7 @@ def _get_spectrum(
 
     _end_time = time.time()
     _elapsed_time = _end_time - _start_time
-    logger.debug(f"made galaxy spectrum in {_elapsed_time} seconds")
+    logger.info(f"made galaxy spectrum in {_elapsed_time} seconds")
 
     return bulge_sed, disk_sed, knot_sed
 
@@ -266,7 +260,7 @@ def _get_galaxy(
     _end_time = time.time()
     _elapsed_time = _end_time - _start_time
 
-    logger.debug(f"made galaxy in {_elapsed_time} seconds")
+    logger.info(f"made galaxy in {_elapsed_time} seconds")
 
     return gal
 
@@ -286,7 +280,7 @@ def _get_knot_n(data, i, seed=None):
     n_knot_max = m * (sm - 6) + 3
     n_knot = int(ud * n_knot_max)  # random n up to n_knot_max
 
-    logger.debug(f"simulating {n_knot} knots for galaxy {i}")
+    logger.info(f"simulating {n_knot} knots for galaxy {i}")
 
     return n_knot
 
@@ -400,7 +394,7 @@ class Diffsky(Galaxies):
             from lsstdesc_diffsky.legacy.roman_rubin_2023.dsps.data_loaders.defaults import SSPDataSingleMet
             # note that we can't impose a lower limit due to redshifting
             _keep = (_ssp_data.ssp_wave < red_limit)
-            logger.debug(f"discarding {(~_keep).sum()} of {len(_keep)} wavelengths from templates")
+            logger.info(f"discarding {(~_keep).sum()} of {len(_keep)} wavelengths from templates")
             _ssp_wave = _ssp_data.ssp_wave[_keep]
             _ssp_flux = _ssp_data.ssp_flux[:, _keep]
             ssp_data = SSPDataSingleMet(_ssp_data.ssp_lg_age_gyr, _ssp_wave, _ssp_flux)

@@ -63,7 +63,7 @@ def _get_spectrum(
 
     _end_time = time.time()
     _elapsed_time = _end_time - _start_time
-    logger.debug(f"made stellar spectrum in {_elapsed_time} seconds")
+    logger.info(f"made stellar spectrum in {_elapsed_time} seconds")
 
     return sed
 
@@ -123,7 +123,7 @@ class FSPS(Stars):
                 ),
             ),
         ) + 1
-        logger.info(f"using zmet={zmet} [z={self.stellar_population.zlegend[zmet - 1]}]")
+        logger.debug(f"requested z={z}; closest zmet is {zmet}, z={self.stellar_population.zlegend[zmet - 1]}")
         return _get_spectrum(
             self.stellar_population,
             mass,
