@@ -41,3 +41,11 @@ lsst_sim =[
 phoenix = [
     "pystellibs @ git+https://github.com/cahebert/pystellibs.git#egg=add-phoenix-data",
 ]
+roman_rubin = [
+    "diffmah==0.4.2",
+    "diffstar==0.2.2",
+    "dsps==0.3.5",
+    "jax==0.4.19",
+    "lsstdesc-diffsky==1.0.0",
+    "scipy==1.10.1",
+]
