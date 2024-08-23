@@ -11,18 +11,11 @@ from lsstdesc_diffsky.legacy.roman_rubin_2023.dsps.data_loaders.load_ssp_data im
 logger = logging.getLogger(__name__)
 
 
-DSPS_TEST_DATA_URL = "https://portal.nersc.gov/project/hacc/aphearin/lsstdesc_diffsky_data/roman_rubin_2023_z_0_1_cutout_9043.testdata.hdf5"
-DSPS_TEST_DATA = "diffsky.testdata.hdf5"
+# DSPS_TEST_DATA_URL = "https://portal.nersc.gov/project/hacc/aphearin/lsstdesc_diffsky_data/roman_rubin_2023_z_0_1_cutout_9043.testdata.hdf5"
 DSPS_SSP_DATA_URL = "https://portal.nersc.gov/project/hacc/aphearin/DSPS_data/ssp_data_fsps_v3.2_age.h5"
 DSPS_SSP_DATA = "dsps_ssp_data_singlemet.h5"
 
 MOCK_NAME = "roman_rubin_2023"
-
-
-def retrieve_dsps_test_data():
-    logger.info(f"Retrieving {DSPS_TEST_DATA_URL} > {DSPS_TEST_DATA}")
-    status = urllib.request.urlretrieve(DSPS_TEST_DATA_URL, DSPS_TEST_DATA)
-    return status
 
 
 def retrieve_dsps_ssp_data(fname):
