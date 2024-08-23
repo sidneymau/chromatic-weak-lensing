@@ -39,6 +39,13 @@ class LSST_Sim:
         self.data = data
         self.num_rows = utils.count_rows(data)
 
+    # def to_iter(self, *args, **kwargs):
+    #     def _iterator(self, *args, **kwargs):
+    #         for i in range(self.num_rows):
+    #             yield self.get_params(i, *args, **kwargs)
+
+    #     return _iterator(self, *args, **kwargs)
+
     def get_params(self, i):
         sparams = StellarParams(
             ra=self.data["ra"][i],

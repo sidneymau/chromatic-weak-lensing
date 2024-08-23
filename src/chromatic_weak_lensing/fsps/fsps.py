@@ -63,7 +63,7 @@ def _get_spectrum(
 
     _end_time = time.time()
     _elapsed_time = _end_time - _start_time
-    logger.info(f"made stellar spectrum in {_elapsed_time} seconds")
+    logger.debug(f"made stellar spectrum in {_elapsed_time} seconds")
 
     return sed
 

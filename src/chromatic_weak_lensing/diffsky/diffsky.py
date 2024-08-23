@@ -62,7 +62,7 @@ def _get_morphology(
 
     _end_time = time.time()
     _elapsed_time = _end_time - _start_time
-    logger.info(f"made galaxy morphology in {_elapsed_time} seconds")
+    logger.debug(f"made galaxy morphology in {_elapsed_time} seconds")
 
     return bulge, disk, knots
 
@@ -155,7 +155,7 @@ def _get_spectrum(
 
     _end_time = time.time()
     _elapsed_time = _end_time - _start_time
-    logger.info(f"made galaxy spectrum in {_elapsed_time} seconds")
+    logger.debug(f"made galaxy spectrum in {_elapsed_time} seconds")
 
     return bulge_sed, disk_sed, knot_sed
 
@@ -251,7 +251,7 @@ def _get_galaxy(
     _end_time = time.time()
     _elapsed_time = _end_time - _start_time
 
-    logger.info(f"made galaxy in {_elapsed_time} seconds")
+    logger.debug(f"made galaxy in {_elapsed_time} seconds")
 
     return gal
 
