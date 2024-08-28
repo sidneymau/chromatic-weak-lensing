@@ -35,6 +35,20 @@ def _query_data_lab(ring, N):
 
 
 class LSST_Sim:
+    columns = [
+       "ra",
+       "dec",
+       "av",
+       "mass",
+       "logg",
+       "logte",
+       "logl",
+       "mu0",
+       "z",
+       "label",
+       "c_o",
+    ]
+
     def __init__(self, data):
         self.data = data
         self.num_rows = utils.count_rows(data)
