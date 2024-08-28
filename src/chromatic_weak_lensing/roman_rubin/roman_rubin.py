@@ -206,7 +206,10 @@ class RomanRubin:
             n_knots,
         )
 
-    # def get_color(self, i):
-    #     lsst_obs_g = utils.unwrap(self.data["LSST_obs_g"][i])
-    #     lsst_obs_i = utils.unwrap(self.data["LSST_obs_i"][i])
-    #     return lsst_obs_g - lsst_obs_i
+    def get_color_params(self, i):
+        lsst_obs_g = utils.unwrap(self.data["LSST_obs_g"][i])
+        lsst_obs_i = utils.unwrap(self.data["LSST_obs_i"][i])
+        return ColorParams(
+            lsst_obs_g,
+            lsst_obs_i,
+        )
