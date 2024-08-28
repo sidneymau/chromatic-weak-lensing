@@ -276,12 +276,11 @@ class Diffsky(Galaxies):
             ssp_data = _ssp_data
         self.ssp_data = ssp_data
 
-    # def get_color(
-    #     self,
-    #     lsst_obs_g,
-    #     lsst_obs_i,
-    # ):
-    #     return lsst_obs_g - lsst_obs_i
+    def get_color(
+        self,
+        obs_params,
+    ):
+        return obs_params.LSST_obs_g - obs_params.LSST_obs_i
 
     def get_morphology(
         self,

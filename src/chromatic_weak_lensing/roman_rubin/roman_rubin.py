@@ -48,11 +48,15 @@ SpectrumParams = namedtuple(
 )
 
 
-ColorParams = namedtuple(
-    "ColorParams",
+ObsParams = namedtuple(
+    "ObsParams",
     [
+        "LSST_obs_u",
         "LSST_obs_g",
+        "LSST_obs_r",
         "LSST_obs_i",
+        "LSST_obs_z",
+        "LSST_obs_y",
     ],
 )
 
@@ -122,7 +126,7 @@ class RomanRubin:
        "um_source_galaxy_obs_sm",
     ]
     spectral_columns = ALL_DIFFSKY_PNAMES
-    color_columns = [
+    obs_columns = [
         "LSST_obs_u",
         "LSST_obs_g",
         "LSST_obs_r",
@@ -130,7 +134,7 @@ class RomanRubin:
         "LSST_obs_z",
         "LSST_obs_y",
     ]
-    columns = list(set(morphology_columns + spectral_columns + color_columns))
+    columns = list(set(morphology_columns + spectral_columns + obs_columns))
 
     def __init__(self, data):
         self.data = data
@@ -206,10 +210,18 @@ class RomanRubin:
             n_knots,
         )
 
-    def get_color_params(self, i):
+    def get_obs_params(self, i):
+        lsst_obs_u = utils.unwrap(self.data["LSST_obs_u"][i])
         lsst_obs_g = utils.unwrap(self.data["LSST_obs_g"][i])
+        lsst_obs_r = utils.unwrap(self.data["LSST_obs_r"][i])
         lsst_obs_i = utils.unwrap(self.data["LSST_obs_i"][i])
-        return ColorParams(
+        lsst_obs_z = utils.unwrap(self.data["LSST_obs_z"][i])
+        lsst_obs_y = utils.unwrap(self.data["LSST_obs_y"][i])
+        return ObsParams(
+            lsst_obs_u,
             lsst_obs_g,
+            lsst_obs_r,
             lsst_obs_i,
+            lsst_obs_z,
+            lsst_obs_y,
         )
