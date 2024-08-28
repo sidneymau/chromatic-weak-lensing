@@ -257,6 +257,8 @@ def _get_galaxy(
 
 
 class Diffsky(Galaxies):
+    cosmo_params = OUTER_RIM_COSMO_PARAMS
+
     def __init__(self, red_limit=12_000):
         self.name = "diffsky"
         self.diffskypop_params = load_diffskypop_params()
@@ -273,8 +275,6 @@ class Diffsky(Galaxies):
         else:
             ssp_data = _ssp_data
         self.ssp_data = ssp_data
-
-        self.cosmo_params = OUTER_RIM_COSMO_PARAMS
 
     def get_morphology(
         self,
