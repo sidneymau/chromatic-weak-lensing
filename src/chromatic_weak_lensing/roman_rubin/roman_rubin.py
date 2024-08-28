@@ -1,3 +1,4 @@
+from collections import namedtuple
 import logging
 import math
 import os
@@ -20,6 +21,56 @@ from chromatic_weak_lensing import utils
 
 
 logger = logging.getLogger(__name__)
+
+
+MorphologyParams = namedtuple(
+    "MorphologyParams",
+    [
+        "redshift",
+        "spheroidEllipticity1",
+        "spheroidEllipticity2",
+        "spheroidHalfLightRadiusArcsec",
+        "diskEllipticity1",
+        "diskEllipticity2",
+        "diskHalfLightRadiusArcsec",
+        "diffsky_param_data",
+        "n_knots",
+    ],
+)
+
+
+SpectrumParams = namedtuple(
+    "SpectrumParams",
+    [
+        "redshift",
+        "diffsky_param_data",
+    ],
+)
+
+
+ColorParams = namedtuple(
+    "ColorParams",
+    [
+        "LSST_obs_g",
+        "LSST_obs_i",
+    ],
+)
+
+
+GalaxyParams = namedtuple(
+    "GalaxyParams",
+    [
+        "redshift",
+        "spheroidEllipticity1",
+        "spheroidEllipticity2",
+        "spheroidHalfLightRadiusArcsec",
+        "diskEllipticity1",
+        "diskEllipticity2",
+        "diskHalfLightRadiusArcsec",
+        "diffsky_param_data",
+        "n_knots",
+    ],
+)
 
 
 # from https://github.com/LSSTDESC/skyCatalogs/blob/main/skycatalogs/objects/diffsky_object.py
@@ -71,7 +122,15 @@ class RomanRubin:
        "um_source_galaxy_obs_sm",
     ]
     spectral_columns = ALL_DIFFSKY_PNAMES
-    columns = list(set(morphology_columns + spectral_columns))
+    color_columns = [
+        "LSST_obs_u",
+        "LSST_obs_g",
+        "LSST_obs_r",
+        "LSST_obs_i",
+        "LSST_obs_z",
+        "LSST_obs_y",
+    ]
+    columns = list(set(morphology_columns + spectral_columns + color_columns))
 
     def __init__(self, data):
         self.data = data
@@ -99,7 +158,7 @@ class RomanRubin:
         else:
             n_knots = 0
 
-        return (
+        return MorphologyParams(
             redshift,
             spheroidEllipticity1,
             spheroidEllipticity2,
@@ -114,7 +173,7 @@ class RomanRubin:
     def get_spectrum_params(self, i):
         redshift = utils.unwrap(self.data["redshift"][i])
         diffsky_param_data = _get_diffsky_params(self.data, i)
-        return (
+        return SpectrumParams(
             redshift,
             diffsky_param_data,
         )
@@ -135,7 +194,7 @@ class RomanRubin:
         else:
             n_knots = 0
 
-        return (
+        return GalaxyParams(
             redshift,
             spheroidEllipticity1,
             spheroidEllipticity2,
@@ -147,3 +206,7 @@ class RomanRubin:
             n_knots,
         )
 
+    # def get_color(self, i):
+    #     lsst_obs_g = utils.unwrap(self.data["LSST_obs_g"][i])
+    #     lsst_obs_i = utils.unwrap(self.data["LSST_obs_i"][i])
+    #     return lsst_obs_g - lsst_obs_i

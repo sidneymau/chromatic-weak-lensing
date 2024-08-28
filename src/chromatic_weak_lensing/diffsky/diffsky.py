@@ -276,56 +276,54 @@ class Diffsky(Galaxies):
             ssp_data = _ssp_data
         self.ssp_data = ssp_data
 
+    # def get_color(
+    #     self,
+    #     lsst_obs_g,
+    #     lsst_obs_i,
+    # ):
+    #     return lsst_obs_g - lsst_obs_i
+
     def get_morphology(
         self,
-        redshift,
-        spheroidEllipticity1,
-        spheroidEllipticity2,
-        spheroidHalfLightRadiusArcsec,
-        diskEllipticity1,
-        diskEllipticity2,
-        diskHalfLightRadiusArcsec,
-        diffsky_param_data,
-        n_knots=0,
+        morphology_params,
     ):
         disk_bulge_sed_info = calc_rest_sed_disk_bulge_knot_singlegal(
-            redshift,
-            diffsky_param_data.mah_params,
-            diffsky_param_data.ms_params,
-            diffsky_param_data.q_params,
-            diffsky_param_data.fbulge_params,
-            diffsky_param_data.fknot,
+            morphology_params.redshift,
+            morphology_params.diffsky_param_data.mah_params,
+            morphology_params.diffsky_param_data.ms_params,
+            morphology_params.diffsky_param_data.q_params,
+            morphology_params.diffsky_param_data.fbulge_params,
+            morphology_params.diffsky_param_data.fknot,
             self.ssp_data,
             self.diffskypop_params,
             self.cosmo_params,
         )
 
         return _get_total_morphology(
-            spheroidEllipticity1,
-            spheroidEllipticity2,
-            spheroidHalfLightRadiusArcsec,
-            diskEllipticity1,
-            diskEllipticity2,
-            diskHalfLightRadiusArcsec,
+            morphology_params.spheroidEllipticity1,
+            morphology_params.spheroidEllipticity2,
+            morphology_params.spheroidHalfLightRadiusArcsec,
+            morphology_params.diskEllipticity1,
+            morphology_params.diskEllipticity2,
+            morphology_params.diskHalfLightRadiusArcsec,
             disk_bulge_sed_info.mstar_total,
             disk_bulge_sed_info.mstar_bulge,
             disk_bulge_sed_info.mstar_diffuse_disk,
             disk_bulge_sed_info.mstar_knot,
-            n_knots=n_knots,
+            n_knots=morphology_params.n_knots,
         )
 
     def get_spectrum(
         self,
-        redshift,
-        diffsky_param_data,
+        spectrum_params,
     ):
         disk_bulge_sed_info = calc_rest_sed_disk_bulge_knot_singlegal(
-            redshift,
-            diffsky_param_data.mah_params,
-            diffsky_param_data.ms_params,
-            diffsky_param_data.q_params,
-            diffsky_param_data.fbulge_params,
-            diffsky_param_data.fknot,
+            spectrum_params.redshift,
+            spectrum_params.diffsky_param_data.mah_params,
+            spectrum_params.diffsky_param_data.ms_params,
+            spectrum_params.diffsky_param_data.q_params,
+            spectrum_params.diffsky_param_data.fbulge_params,
+            spectrum_params.diffsky_param_data.fknot,
             self.ssp_data,
             self.diffskypop_params,
             self.cosmo_params,
@@ -336,7 +334,7 @@ class Diffsky(Galaxies):
         rest_sed_knot = disk_bulge_sed_info.rest_sed_knot
 
         return _get_total_spectrum(
-            redshift,
+            spectrum_params.redshift,
             self.ssp_data,
             rest_sed_bulge,
             rest_sed_diffuse_disk,
@@ -346,25 +344,17 @@ class Diffsky(Galaxies):
 
     def get_galaxy(
         self,
-        redshift,
-        spheroidEllipticity1,
-        spheroidEllipticity2,
-        spheroidHalfLightRadiusArcsec,
-        diskEllipticity1,
-        diskEllipticity2,
-        diskHalfLightRadiusArcsec,
-        diffsky_param_data,
-        n_knots=0,
+        galaxy_params,
         morphology="chromatic",
     ):
 
         disk_bulge_sed_info = calc_rest_sed_disk_bulge_knot_singlegal(
-            redshift,
-            diffsky_param_data.mah_params,
-            diffsky_param_data.ms_params,
-            diffsky_param_data.q_params,
-            diffsky_param_data.fbulge_params,
-            diffsky_param_data.fknot,
+            galaxy_params.redshift,
+            galaxy_params.diffsky_param_data.mah_params,
+            galaxy_params.diffsky_param_data.ms_params,
+            galaxy_params.diffsky_param_data.q_params,
+            galaxy_params.diffsky_param_data.fbulge_params,
+            galaxy_params.diffsky_param_data.fknot,
             self.ssp_data,
             self.diffskypop_params,
             self.cosmo_params,
@@ -380,19 +370,19 @@ class Diffsky(Galaxies):
         mstar_knot = disk_bulge_sed_info.mstar_knot
 
         return _get_galaxy(
-            redshift,
-            spheroidEllipticity1,
-            spheroidEllipticity2,
-            spheroidHalfLightRadiusArcsec,
-            diskEllipticity1,
-            diskEllipticity2,
-            diskHalfLightRadiusArcsec,
+            galaxy_params.redshift,
+            galaxy_params.spheroidEllipticity1,
+            galaxy_params.spheroidEllipticity2,
+            galaxy_params.spheroidHalfLightRadiusArcsec,
+            galaxy_params.diskEllipticity1,
+            galaxy_params.diskEllipticity2,
+            galaxy_params.diskHalfLightRadiusArcsec,
             self.ssp_data,
             rest_sed_bulge,
             rest_sed_diffuse_disk,
             rest_sed_knot,
             self.cosmo_params,
-            n_knots=n_knots,
+            n_knots=galaxy_params.n_knots,
             morphology=morphology,
             m_total=mstar_total,
             m_bulge=mstar_bulge,
