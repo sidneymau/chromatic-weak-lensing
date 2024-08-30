@@ -20,9 +20,9 @@ dependencies = [
 
 
 [project.optional-dependencies]
-# btsettl = [
-#     "pystellibs @ git+https://github.com/mfouesneau/pystellibs.git",
-# ]
+btsettl = [
+    "pystellibs @ git+https://github.com/sidneymau/pystellibs.git",
+]
 diffsky = [
     "diffmah==0.4.2",
     "diffstar==0.2.2",
