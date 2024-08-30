@@ -1,6 +1,5 @@
 [project]
 name = "chromatic-weak-lensing"
-requires-python = ">=3.9"
 license = {file = "LICENSE"}
 readme = "README.md"
 description = ""
@@ -21,9 +20,9 @@ dependencies = [
 
 
 [project.optional-dependencies]
-btsettl = [
-    "pystellibs",
-]
+# btsettl = [
+#     "pystellibs @ git+https://github.com/mfouesneau/pystellibs.git",
+# ]
 diffsky = [
     "diffmah==0.4.2",
     "diffstar==0.2.2",
@@ -38,9 +37,9 @@ fsps = [
 lsst_sim =[
     "astro-datalab",
 ]
-phoenix = [
-    "pystellibs @ git+https://github.com/cahebert/pystellibs.git#egg=add-phoenix-data",
-]
+# phoenix = [
+#     "pystellibs @ git+https://github.com/cahebert/pystellibs.git#egg=add-phoenix-data",
+# ]
 roman_rubin = [
     "diffmah==0.4.2",
     "diffstar==0.2.2",

@@ -10,7 +10,8 @@ import time
 
 import astropy.units as u
 import galsim
-import pystellibs
+# import pystellibs
+from chromatic_weak_lensing._vendor import pystellibs
 
 
 from chromatic_weak_lensing import utils
