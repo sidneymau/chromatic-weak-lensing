@@ -1,3 +1,11 @@
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"chromatic_weak_lensing.diffsky" = [
+    "data/dsps_ssp_data_singlemet.h5",
+]
+
 [project]
 name = "chromatic-weak-lensing"
 license = {file = "LICENSE"}
