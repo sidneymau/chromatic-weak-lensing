@@ -1,3 +1,0 @@
-[submodule "src/chromatic_weak_lensing/_vendor/pystellibs"]
-	path = src/chromatic_weak_lensing/_vendor/pystellibs
-	url = https://github.com/sidneymau/pystellibs.git
