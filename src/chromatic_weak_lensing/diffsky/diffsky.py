@@ -37,16 +37,16 @@ def _get_morphology(
 ):
     _start_time = time.time()
     bulge_ellipticity = galsim.Shear(
-        g1=spheroidEllipticity1,
-        g2=spheroidEllipticity2,
+        e1=spheroidEllipticity1,
+        e2=spheroidEllipticity2,
     )
     bulge = galsim.DeVaucouleurs(
         half_light_radius=spheroidHalfLightRadiusArcsec,
     ).shear(bulge_ellipticity)
 
     disk_ellipticity = galsim.Shear(
-        g1=diskEllipticity1,
-        g2=diskEllipticity2,
+        e1=diskEllipticity1,
+        e2=diskEllipticity2,
     )
     disk = galsim.Exponential(
         half_light_radius=diskHalfLightRadiusArcsec,
@@ -100,6 +100,7 @@ def _get_total_morphology(
 
 def _get_spectrum(
      redshift,
+     redshiftHubble,
      ssp_data,
      rest_sed_bulge,
      rest_sed_diffuse_disk,
@@ -109,7 +110,7 @@ def _get_spectrum(
     _start_time = time.time()
 
     luminosity_distance = dsps.cosmology.luminosity_distance_to_z(
-        redshift,
+        redshiftHubble,
         cosmo_params.Om0,
         cosmo_params.w0,
         cosmo_params.wa,
@@ -162,6 +163,7 @@ def _get_spectrum(
 
 def _get_total_spectrum(
     redshift,
+    redshiftHubble,
     ssp_data,
     rest_sed_bulge,
     rest_sed_diffuse_disk,
@@ -170,6 +172,7 @@ def _get_total_spectrum(
 ):
     bulge_sed, disk_sed, knot_sed = _get_spectrum(
         redshift,
+        redshiftHubble,
         ssp_data,
         rest_sed_bulge,
         rest_sed_diffuse_disk,
@@ -181,6 +184,7 @@ def _get_total_spectrum(
 
 def _get_galaxy(
     redshift,
+    redshiftHubble,
     spheroidEllipticity1,
     spheroidEllipticity2,
     spheroidHalfLightRadiusArcsec,
@@ -217,6 +221,7 @@ def _get_galaxy(
     # get restframe SEDs and redshift composite object at end
     bulge_sed, disk_sed, knot_sed = _get_spectrum(
         redshift,
+        redshiftHubble,
         ssp_data,
         rest_sed_bulge,
         rest_sed_diffuse_disk,
@@ -334,6 +339,7 @@ class Diffsky(Galaxies):
 
         return _get_total_spectrum(
             spectrum_params.redshift,
+            spectrum_params.redshiftHubble,
             self.ssp_data,
             rest_sed_bulge,
             rest_sed_diffuse_disk,
@@ -370,6 +376,7 @@ class Diffsky(Galaxies):
 
         return _get_galaxy(
             galaxy_params.redshift,
+            galaxy_params.redshiftHubble,
             galaxy_params.spheroidEllipticity1,
             galaxy_params.spheroidEllipticity2,
             galaxy_params.spheroidHalfLightRadiusArcsec,

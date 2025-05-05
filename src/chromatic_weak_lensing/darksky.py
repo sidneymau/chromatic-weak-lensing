@@ -5,7 +5,7 @@ import galsim
 
 logger = logging.getLogger(__name__)
 
-# darksky.dat from https://raw.githubusercontent.com/lsst-pst/syseng_throughputs/main/siteProperties/darksky.dat
+# darksky.dat from https://github.com/lsst-pst/syseng_throughputs/blob/main/siteProperties/darksky.dat
 
 
 class Darksky:

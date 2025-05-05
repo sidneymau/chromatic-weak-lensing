@@ -16,7 +16,6 @@ from lsstdesc_diffsky.constants import (
 )
 from lsstdesc_diffsky.io_utils.load_diffsky_healpixel import DiffskyParams
 
-
 from chromatic_weak_lensing import utils
 
 
@@ -27,6 +26,7 @@ MorphologyParams = namedtuple(
     "MorphologyParams",
     [
         "redshift",
+        "redshiftHubble",
         "spheroidEllipticity1",
         "spheroidEllipticity2",
         "spheroidHalfLightRadiusArcsec",
@@ -43,6 +43,7 @@ SpectrumParams = namedtuple(
     "SpectrumParams",
     [
         "redshift",
+        "redshiftHubble",
         "diffsky_param_data",
     ],
 )
@@ -65,6 +66,7 @@ GalaxyParams = namedtuple(
     "GalaxyParams",
     [
         "redshift",
+        "redshiftHubble",
         "spheroidEllipticity1",
         "spheroidEllipticity2",
         "spheroidHalfLightRadiusArcsec",
@@ -117,6 +119,7 @@ class RomanRubin:
     # these are the minimal necessary columns for producing diffsky galaxies
     morphology_columns = [
        "redshift",
+       "redshiftHubble",
        "spheroidEllipticity1",
        "spheroidEllipticity2",
        "spheroidHalfLightRadiusArcsec",
@@ -149,6 +152,7 @@ class RomanRubin:
 
     def get_morphology_params(self, i, knots=False):
         redshift = utils.unwrap(self.data["redshift"][i])
+        redshiftHubble = utils.unwrap(self.data["redshiftHubble"][i])
         spheroidEllipticity1 = utils.unwrap(self.data["spheroidEllipticity1"][i])
         spheroidEllipticity2 = utils.unwrap(self.data["spheroidEllipticity2"][i])
         spheroidHalfLightRadiusArcsec = utils.unwrap(self.data["spheroidHalfLightRadiusArcsec"][i])
@@ -164,6 +168,7 @@ class RomanRubin:
 
         return MorphologyParams(
             redshift,
+            redshiftHubble,
             spheroidEllipticity1,
             spheroidEllipticity2,
             spheroidHalfLightRadiusArcsec,
@@ -176,14 +181,17 @@ class RomanRubin:
 
     def get_spectrum_params(self, i):
         redshift = utils.unwrap(self.data["redshift"][i])
+        redshiftHubble = utils.unwrap(self.data["redshiftHubble"][i])
         diffsky_param_data = _get_diffsky_params(self.data, i)
         return SpectrumParams(
             redshift,
+            redshiftHubble,
             diffsky_param_data,
         )
 
     def get_params(self, i, knots=False):
         redshift = utils.unwrap(self.data["redshift"][i])
+        redshiftHubble = utils.unwrap(self.data["redshiftHubble"][i])
         spheroidEllipticity1 = utils.unwrap(self.data["spheroidEllipticity1"][i])
         spheroidEllipticity2 = utils.unwrap(self.data["spheroidEllipticity2"][i])
         spheroidHalfLightRadiusArcsec = utils.unwrap(self.data["spheroidHalfLightRadiusArcsec"][i])
@@ -200,6 +208,7 @@ class RomanRubin:
 
         return GalaxyParams(
             redshift,
+            redshiftHubble,
             spheroidEllipticity1,
             spheroidEllipticity2,
             spheroidHalfLightRadiusArcsec,
