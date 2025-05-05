@@ -40,7 +40,7 @@ diffsky = [
     "dsps==0.3.5",
     "jax==0.4.19",
     "lsstdesc-diffsky==1.0.0",
-    "scipy",
+    "scipy==1.12.0",
 ]
 fsps = [
     "fsps",
@@ -57,5 +57,5 @@ roman_rubin = [
     "dsps==0.3.5",
     "jax==0.4.19",
     "lsstdesc-diffsky==1.0.0",
-    "scipy",
+    "scipy==1.12.0",
 ]
