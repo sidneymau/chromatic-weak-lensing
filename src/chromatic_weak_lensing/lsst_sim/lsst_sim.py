@@ -7,8 +7,6 @@ import astropy.units as u
 import galsim
 import numpy as np
 
-from dl import queryClient as qc
-
 from chromatic_weak_lensing import utils
 from chromatic_weak_lensing import StellarParams
 
@@ -18,6 +16,8 @@ logger = logging.getLogger(__name__)
 
 def _query_data_lab(ring, N):
     """Fetch TRILEGAL stars for a given ra/dec region."""
+    from dl import queryClient as qc
+
     query = \
        """SELECT
               mass, ra, dec, logage, logg, logte, logl, z, mu0, av, label, c_o,
