@@ -37,16 +37,16 @@ def _get_morphology(
 ):
     _start_time = time.time()
     bulge_ellipticity = galsim.Shear(
-        e1=spheroidEllipticity1,
-        e2=spheroidEllipticity2,
+        g1=spheroidEllipticity1,
+        g2=spheroidEllipticity2,
     )
     bulge = galsim.DeVaucouleurs(
         half_light_radius=spheroidHalfLightRadiusArcsec,
     ).shear(bulge_ellipticity)
 
     disk_ellipticity = galsim.Shear(
-        e1=diskEllipticity1,
-        e2=diskEllipticity2,
+        g1=diskEllipticity1,
+        g2=diskEllipticity2,
     )
     disk = galsim.Exponential(
         half_light_radius=diskHalfLightRadiusArcsec,
