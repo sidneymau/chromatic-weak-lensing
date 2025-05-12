@@ -1,9 +1,5 @@
 from . import utils
 
-from .galaxies import (
-    Galaxies,
-)
-
 from .stars import (
     StellarParams, Stars,
 )
@@ -19,3 +15,12 @@ from .darksky import (
 from .main_sequence import (
     MainSequence,
 )
+
+from .galaxies import (
+    Galaxies,
+)
+
+from .simple_galaxy import (
+    SimpleGalaxy,
+)
+
