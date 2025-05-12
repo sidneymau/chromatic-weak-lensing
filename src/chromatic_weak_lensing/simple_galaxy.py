@@ -1,6 +1,8 @@
 import logging
 import time
 
+import galsim
+
 from chromatic_weak_lensing import Blackbody, Galaxies, MainSequence
 
 

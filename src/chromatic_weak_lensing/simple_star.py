@@ -12,8 +12,11 @@ class SimpleStar(Stars):
         self.name = "SimpleStar"
         self.spectrum = Blackbody()
         self.stellar_mass = 1
+        self.stellar_params = MainSequence.get_params(self.stellar_mass)
+
+    def get_params(self, *args, **kwargs):
+        return self.spectrum.get_params(self.stellar_params)
 
     def get_spectrum(self, *args, **kwargs):
-        _params = MainSequence.get_params(self.stellar_mass)
-        _blackbody_params = self.spectrum.get_params(_params)
+        _blackbody_params = self.get_params()
         return self.spectrum.get_spectrum(*_blackbody_params)
