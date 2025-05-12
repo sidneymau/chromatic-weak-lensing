@@ -1,14 +1,6 @@
-import functools
 import logging
 import time
 
-import astropy.units as u
-from astropy.constants import h, c, k_B
-import math
-import galsim
-import numpy as np
-
-from chromatic_weak_lensing import utils
 from chromatic_weak_lensing import Blackbody, Galaxies, MainSequence
 
 
